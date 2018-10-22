@@ -1,4 +1,4 @@
-#cartoonForm {
+#gifForm {
     float: right;
     width: 25%;
     text-align: left;
@@ -6,16 +6,16 @@
     margin: 10px;
 }
 
-#cartoons {
+#gifs {
     float: left;
     width: 75%;
 }
 
-#cartoonButtons {
+#gifButtons {
     width: 100%;
 }
 
-.cartoon-btn {
+.gif-btn {
     padding: 5px;
     margin: 5px;
     font-size: 16px;
