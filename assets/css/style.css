@@ -1,0 +1,32 @@
+#cartoonForm {
+    float: right;
+    width: 25%;
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+}
+
+#cartoons {
+    float: left;
+    width: 75%;
+}
+
+#cartoonButtons {
+    width: 100%;
+}
+
+.cartoon-btn {
+    padding: 5px;
+    margin: 5px;
+    font-size: 16px;
+    color: blue;
+}
+
+.list-item {
+    float: left;
+    margin: 10px;
+}
+
+.list-image {
+    margin: 5px;
+}
