@@ -1,26 +1,47 @@
 <!DOCTYPE <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title>Pixar Gifs!</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
 </head>
+
 <body>
     <div id="gifButtons">
     </div>
 
     <form id="gifForm">
-        <label type="gif-input">Add a gif</label>
-        <input type="text" id="gif-input">
+        <p><label type="gif-input">Add new search:</label>
+            <input type="text" id="gif-input" /></p>
+        <p><label type="gif-input">Number of gifs to retrieve</label>
+            <select> name="numGifs"
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+        </p>
+        </select>
+        <p><label type="gif-input">Filter by Rating:</label>
+        <select> name="rating"
+            <option value="any">any</option>
+            <option value="Y">Y</option>
+            <option value="G">G</option>
+            <option value="PG">PG</option>
+            <option value="PG">PG-13</option>
+            <option value="R">R</option>
+            </p>
+        </select>
+        <br>
         <input id="addGif" type="submit" value="Submit">
     </form>
 
     <div id="gifs">
     </div>
 
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="assets/javascript/app.js"></script> 
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="assets/javascript/app.js"></script>
 
 </body>
+
 </html>

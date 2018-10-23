@@ -13,11 +13,13 @@ ul {
     text-align: left;
     padding: 20px;
     margin: 10px;
+    color: white;
+    border: solid 1px white;
 }
 
 #gifs {
     float: left;
-    width: 75%;
+    width: 70%;
 }
 
 #gifButtons {

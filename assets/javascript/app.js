@@ -4,7 +4,7 @@
 $(document).ready(function () {
 
     // GLOBAL VARIABLES 
-    const numGifsPerSearch = 10;
+    var numGifsPerSearch = 10;
 
     // List of buttons to preload when page starts
     var topics = [
@@ -23,30 +23,26 @@ $(document).ready(function () {
         "aladdin",
         "the lion king",
     ];
-    var gifItem = {
-        lastTopicSearch: "", // topic of this query
-        gifUrls: [],         // array of animated gif urls
-        gifStillUrls: [],    // array of still gif urls 
-    }
+    var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
 
     /******************************************* */
     /* initalize the page with our seeded topics */
     /******************************************* */
-    loadPage();
+    loadPage(lastTopicSearch);
 
     //-----------------------------
     // loadPage() - runs as soon as the page is refreshed (loaded), it creates the default buttons of our topic    
     //-----------------------------
-    function loadPage() {
+    function loadPage(title) {
 
         // Loop through each of the topics adding a button of that name
         for (var i = 0;
             (i < topics.length); i++) {
-            var title = topics[i];
-            addButton(title);
+            var btnLbl = topics[i];
+            addButton(btnLbl);
         }
         // search and display the first button's topic
-        performGiphySearch(topics[0]);
+        performGiphySearch(title);
     }
 
     // addButton() - adds a button to the title
@@ -69,7 +65,7 @@ $(document).ready(function () {
         var queryURL = buildQueryURL(title);
 
         // Save this search to a global variable
-        gifItem.lastTopicSearch = title;
+        lastTopicSearch = title;
 
         // Make the AJAX request to the API - GETs the JSON data at the queryURL.
         // The response data gets passed as an argument to the updatePage function
@@ -113,7 +109,8 @@ $(document).ready(function () {
     //              <li class="list-item>">
     //                  <span class="label"><strong>Title</strong></span>
     //                  <br>
-    //                  <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="false" data-topicIdx=0 data-gifIdx=0>
+    //                  <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" data-topicIdx=0 
+    //                       data-stillURL="url(still_gif_url)" data-animateUrl="url(animate_gif_url)">
     //                  <br>
     //                  <span>Rated: G</span>
     //                  <br>
@@ -129,7 +126,7 @@ $(document).ready(function () {
         // Log the giphyData to console, where it will show up as an object
         console.log(responseData);
         console.log("------------------------------------");
-        
+
         // Create unordered list element and attach to main HTML element 
         var gifListElem = $("<ul>");
         gifListElem.addClass("list-group");
@@ -150,20 +147,17 @@ $(document).ready(function () {
             gifListItemElem.append($("<br>"));
 
             // Find the index of the current item and save it as metadata to the element
-            var topicIdx = topics.indexOf(gifItem.lastTopicSearch);
-
-            // Save some url data and link it to the DOM elements  for use by the image click event
-            gifItem.gifUrls.push(gifData.images.fixed_height.url);
-            gifItem.gifStillUrls.push(gifData.images.fixed_height_still.url);
+            var topicIdx = topics.indexOf(lastTopicSearch);
 
             // Update the screen item, with indexes it to the saved metadata
             var gifImgElem = $("<img>");
             $(gifImgElem).addClass("gif-img");
             $(gifImgElem).attr("src", gifData.images.fixed_height_still.url);
             $(gifImgElem).attr("alt", gifData.title);
-            $(gifImgElem).attr("data-animated", false);
+            $(gifImgElem).attr("data-animated",  "still");
             $(gifImgElem).attr("data-topicIdx", topicIdx);
-            $(gifImgElem).attr("data-gifIdx", gifItem.gifStillUrls.length - 1);
+            $(gifImgElem).attr("data-animateUrl", gifData.images.fixed_height.url);
+            $(gifImgElem).attr("data-stillUrl", gifData.images.fixed_height_still.url);
 
             // Chain it all to the DOM
             gifListItemElem.append(gifImgElem);
@@ -185,6 +179,7 @@ $(document).ready(function () {
     //-----------------------
     function clear() {
         $("#gifs").empty();
+        $("#gifButtons").empty();
     }
 
     // ==========================================================
@@ -195,8 +190,10 @@ $(document).ready(function () {
     // $(document).on("click", ".gif-btn") - generatic function to fresh screen on query button clicks
     //-----------------------
     $(document).on("click", ".gif-btn", function () {
+        var title = $(this).attr("data-topic");
         clear();
-        performGiphySearch($(this).attr("data-topic"));
+        loadPage(title);
+        // performGiphySearch($(this).attr("data-topic"));
     });
 
     //-----------------------
@@ -208,13 +205,14 @@ $(document).ready(function () {
         // (in addition to clicks). Prevents the page from reloading on form submit.
         event.preventDefault();
 
-        // Empty the region associated with the gifs
-        clear();
-
         // Grab text the user typed into the search input and build a query string around it
         var title = $("#gif-input").val().trim();
-        addButton(title);
-        performGiphySearch(title);
+        topics.push(title);
+        lastTopicSearch = title;
+
+        // Empty the region associated with the gifs and rebuild the page
+        clear();
+        loadPage(title);
     });
 
     //-----------------------
@@ -229,19 +227,18 @@ $(document).ready(function () {
 
         // Use our saved response data to flip the url from static to animated
         var imgElem = $(this);
-        var gifImgIdx = imgElem.attr("data-gifIdx");
-        if (gifImgIdx) {
+        var stillUrl = imgElem.attr("data-stillUrl");
+        var animatedUrl = imgElem.attr("data-animateUrl");
 
-            // flip the animated flag's state and display the appropriate url
-            var animated = (imgElem.attr("data-animated") === "true");
-            var animated = !animated;
-            if (animated) {
-                imgElem.attr("src", gifItem.gifUrls[gifImgIdx]);
-            } else {
-                imgElem.attr("src", gifItem.gifStillUrls[gifImgIdx]);
-            }
-            imgElem.attr("data-animated",animated);
-
+        // flip the animated flag's state and display the appropriate url
+        if (imgElem.attr("data-animated") === "animate") {
+            // Currently animated, make it still
+            imgElem.attr("data-animated", "still");
+            imgElem.attr("src", stillUrl);
+        } else {
+            // Currently still, make it animated
+            imgElem.attr("data-animated", "animate");
+            imgElem.attr("src", animatedUrl);
         }
     });
 });
