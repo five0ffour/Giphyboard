@@ -128,12 +128,6 @@ $(document).ready(function () {
             gifSpanTitle.addClass("label");
             gifSpanTitle.html("<strong>" + gifData.title + "</strong>");
             gifListItemElem.append(gifSpanTitle);
-
-            // Add Rating
-            var gifSpanRating = $("<span>");
-            gifListItemElem.append($("<br>"));
-            gifSpanRating.html("Rating: " + gifData.rating);
-            gifListItemElem.append(gifSpanRating);
             gifListItemElem.append($("<br>"));
 
             // Add CSS groups to List Elements and attach to main HTML element 
@@ -157,6 +151,14 @@ $(document).ready(function () {
 
             // Chain it all to the DOM
             gifListItemElem.append(gifImgElem);
+
+            // Add Rating
+            var gifSpanRating = $("<span>");
+            gifListItemElem.append($("<br>"));
+            gifSpanRating.html("Rated: " + gifData.rating.toUpperCase());
+            gifListItemElem.append(gifSpanRating);
+            gifListItemElem.append($("<br>"));
+            
             gifListElem.append(gifListItemElem);
         }
     }

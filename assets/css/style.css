@@ -3,6 +3,10 @@ body {
     width: 100%;
 }
 
+ul {
+    list-style: none;
+}
+
 #gifForm {
     float: right;
     width: 25%;
