@@ -14,26 +14,26 @@
 
     <form id="gifForm">
         <p><label type="gif-input">Add new search:</label>
-            <input type="text" id="gif-input" /></p>
+            <input type="text" id="gif-input" />
+            <input id="addGif" type="submit" value="Submit">
+        </p>
         <p><label type="gif-input">Number of gifs to retrieve</label>
-            <select> name="numGifs"
+            <select id="numGifs" name="numGifs">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
+            </select>
         </p>
-        </select>
         <p><label type="gif-input">Filter by Rating:</label>
-        <select> name="rating"
-            <option value="any">any</option>
-            <option value="Y">Y</option>
-            <option value="G">G</option>
-            <option value="PG">PG</option>
-            <option value="PG">PG-13</option>
-            <option value="R">R</option>
-            </p>
-        </select>
-        <br>
-        <input id="addGif" type="submit" value="Submit">
+            <select id="rating" name="rating">
+                <option value="none">none</option>
+                <option value="Y">Y</option>
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG">PG-13</option>
+                <option value="R">R</option>
+            </select>
+        </p>
     </form>
 
     <div id="gifs">

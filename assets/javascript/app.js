@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     // GLOBAL VARIABLES 
     var numGifsPerSearch = 10;
+    var gifRating = "none";
 
     // List of buttons to preload when page starts
     var topics = [
@@ -19,9 +20,8 @@ $(document).ready(function () {
         "pixar cars",
         "a bug's life",
         "pixar brave",
-        "disney shrek",
-        "aladdin",
-        "the lion king",
+        "pixar coco",
+        "the good dinosaur",
     ];
     var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
 
@@ -75,6 +75,12 @@ $(document).ready(function () {
         queryParams.q = title;
         queryParams.limit = numGifsPerSearch;
         queryParams.offset = "0";
+
+        // Add a rating filter if applicable
+        if (gifRating != "none") {
+            queryParams.rating = gifRating;
+        }
+
         queryParams.lang = "en";
 
         // Logging the URL so we have access to it for troubleshooting
@@ -122,7 +128,7 @@ $(document).ready(function () {
     //---------------------------
     function updatePage(responseData) {
 
-        // Cap the number of gifs to display at numGifsPerSearch (10) images
+        // Cap the number of gifs to display at the user set limit of numGifsPerSearch 
         const numGifs = responseData.data.length < numGifsPerSearch ? responseData.data.length : numGifsPerSearch;
 
         // Log the giphyData to console, where it will show up as an object
@@ -181,7 +187,6 @@ $(document).ready(function () {
     //-----------------------
     function clear() {
         $("#gifs").empty();
-        // $("#gifButtons").empty();
     }
 
     // ==========================================================
@@ -194,12 +199,13 @@ $(document).ready(function () {
     $(document).on("click", ".gif-btn", function () {
         var title = $(this).attr("data-topic");
         clear();
-        // loadPage(title);
         performGiphySearch(title);
     });
 
     //-----------------------
-    // $("#addGif").on("click") - event handler for "Add Button" event - adds a new button and associated images to the screen
+    // $("#addGif").on("click") - event handler for "Add Gif" event -
+    //                            adds a new button and associated images to the screen
+    //                            submits a query using the selected filters
     //-----------------------
     $("#addGif").on("click", function (event) {
         // This line allows us to take advantage of the HTML "submit" property
@@ -210,6 +216,8 @@ $(document).ready(function () {
         // Grab text the user typed into the search input and build a query string around it
         var title = $("#gif-input").val().trim();
         topics.push(title);
+
+        // save this as the last search item in our global variable
         lastTopicSearch = title;
 
         // Empty the region associated with the gifs, add a button and rebuild the page
@@ -230,18 +238,41 @@ $(document).ready(function () {
 
         // Use our saved response data to flip the url from static to animated
         var imgElem = $(this);
-        var stillUrl = imgElem.attr("data-stillUrl");
-        var animatedUrl = imgElem.attr("data-animateUrl");
 
         // flip the animated flag's state and display the appropriate url
         if (imgElem.attr("data-animated") === "animate") {
             // Currently animated, make it still
+            var stillUrl = imgElem.attr("data-stillUrl");
             imgElem.attr("data-animated", "still");
             imgElem.attr("src", stillUrl);
         } else {
             // Currently still, make it animated
+            var animatedUrl = imgElem.attr("data-animateUrl");
             imgElem.attr("data-animated", "animate");
             imgElem.attr("src", animatedUrl);
         }
     });
+
+    //--------------------------------
+    // $(numGifs).click()  -- sets the number of gif images to display with each search event
+    //--------------------------------
+    $("#numGifs").change("click", function() {
+        // Use the form control's value to set the global variable for the number of images to display per search
+        var item=$(this);
+        numGifsPerSearch = $(this).val();
+        clear();
+        performGiphySearch(lastTopicSearch);
+    });
+
+        //--------------------------------
+    // $(numGifs).click()  -- sets the number of gif images to display with each search event
+    //--------------------------------
+    $("#rating").change("click", function() {
+        // Use the form control's value to set the global variable for the number of images to display per search
+        var item=$(this);
+        gifRating = $(this).val();
+        clear();
+        performGiphySearch(lastTopicSearch);
+    });
+
 });
