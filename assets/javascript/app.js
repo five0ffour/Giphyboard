@@ -45,7 +45,9 @@ $(document).ready(function () {
         performGiphySearch(title);
     }
 
-    // addButton() - adds a button to the title
+    //-----------------------------------------------
+    // addButton() - adds a button to the title bar
+    //-----------------------------------------------
     function addButton(title) {
 
         // Add a button to the main title screen
@@ -54,25 +56,6 @@ $(document).ready(function () {
         btn.addClass("gif-btn");
         btn.attr("data-topic", title);
         $("#gifButtons").append(btn);
-    }
-
-    //---------------------------
-    // performGiphySearch(title) - uses the passed parameter to run a query against the Giphy back end API
-    //-----------------------------
-    function performGiphySearch(title) {
-
-        // Build the query URL for the ajax request to the NYT API
-        var queryURL = buildQueryURL(title);
-
-        // Save this search to a global variable
-        lastTopicSearch = title;
-
-        // Make the AJAX request to the API - GETs the JSON data at the queryURL.
-        // The response data gets passed as an argument to the updatePage function
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(updatePage);
     }
 
     //---------------------------
@@ -98,6 +81,25 @@ $(document).ready(function () {
         console.log(queryURL + $.param(queryParams));
 
         return queryURL + $.param(queryParams);
+    }
+
+    //---------------------------
+    // performGiphySearch(title) - uses the passed parameter to run a query against the Giphy back end API
+    //-----------------------------
+    function performGiphySearch(title) {
+
+        // Build the query URL for the ajax request to the NYT API
+        var queryURL = buildQueryURL(title);
+
+        // Save this search to a global variable
+        lastTopicSearch = title;
+
+        // Make the AJAX request to the API - GETs the JSON data at the queryURL.
+        // The response data gets passed as an argument to the updatePage function
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(updatePage);
     }
 
     //---------------------------
@@ -179,7 +181,7 @@ $(document).ready(function () {
     //-----------------------
     function clear() {
         $("#gifs").empty();
-        $("#gifButtons").empty();
+        // $("#gifButtons").empty();
     }
 
     // ==========================================================
@@ -192,8 +194,8 @@ $(document).ready(function () {
     $(document).on("click", ".gif-btn", function () {
         var title = $(this).attr("data-topic");
         clear();
-        loadPage(title);
-        // performGiphySearch($(this).attr("data-topic"));
+        // loadPage(title);
+        performGiphySearch(title);
     });
 
     //-----------------------
@@ -210,9 +212,10 @@ $(document).ready(function () {
         topics.push(title);
         lastTopicSearch = title;
 
-        // Empty the region associated with the gifs and rebuild the page
+        // Empty the region associated with the gifs, add a button and rebuild the page
         clear();
-        loadPage(title);
+        addButton(title);
+        performGiphySearch(title);
     });
 
     //-----------------------
