@@ -38,3 +38,5 @@ Michael Galarneau - Initial work - Five0fFour
   
 ## Acknowledgements
 Giphy API:  https://developer.giphy.com  
+Background Wallpaper: http://pixar.wikia.com/wiki/Pixar_Animation_Studios  (modified)  
+Favicon:  https://www.iconfinder.com/icons/23178/eve_pixar_robot_icon  
