@@ -4,6 +4,9 @@
 $(document).ready(function () {
 
     // GLOBAL VARIABLES 
+    const numGifsPerSearch = 10;  
+
+    // List of buttons to preload when page starts
     var topics = [
         "inside out",
         "WALL-E",
@@ -90,13 +93,11 @@ $(document).ready(function () {
 
         // Add the remaining parameters including the item to search for
         queryParams.q = title;
-        queryParams.limit = "10";
+        queryParams.limit = numGifsPerSearch;
         queryParams.offset = "0";
-        // queryParams.rating = "G";
         queryParams.lang = "en";
 
         // Logging the URL so we have access to it for troubleshooting
-        console.log("---------------\nURL: " + queryURL + "\n---------------");
         console.log(queryURL + $.param(queryParams));
 
         return queryURL + $.param(queryParams);
@@ -107,8 +108,8 @@ $(document).ready(function () {
     //---------------------------
     function updatePage(responseData) {
 
-        // Cap the number of gifs to display at 10 images
-        const numGifs = responseData.data.length < 10 ? responseData.data.length : 10;
+        // Cap the number of gifs to display at numGifsPerSearch (10) images
+        const numGifs = responseData.data.length < numGifsPerSearch ? responseData.data.length : numGifsPerSearch;
 
         // Log the giphyData to console, where it will show up as an object
         console.log(responseData);

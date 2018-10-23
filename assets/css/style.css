@@ -1,3 +1,8 @@
+body {
+    background-image: url("../images/pixar.jpg");
+    width: 100%;
+}
+
 #gifForm {
     float: right;
     width: 25%;
