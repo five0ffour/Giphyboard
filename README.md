@@ -3,6 +3,8 @@
 A simple site that demonstrates integration with the Giphy API.  
   
 The game loads 10 buttons of movies produced or created by Pixar.   With a click of each button the program queries Giphy using the button label and pulls back 10 gif links.   The display shows the title, rating and a still image of that gif.   By clicking on the gif image itself,  it will animate.  
+
+The application runs a parallel query to do a movie search and display an associated movie poster (if found).  If an entry is found the program displays some contextual content (name, year, plot, rating) and the img of the moview poster on the sidebar.  
   
 ## Getting Started
 To get started,  copy the program to a clean directory and run "index.html" in your browser.   The program is ready to start automatically.  From there click on a button, image or use the "add gif" button to add a movie query of your own.  
@@ -23,13 +25,14 @@ GitBash installed locally
   
 ## Developer notes
 index.html:  main entry point and user interface, minimal code is here, the dynamicism is all in the app.js
-app.js:  the main mouse click and timer events and UI updates   
+app.js:  the main mouse click and timer events and UI updates     
   
 the Giphy API can be found at:  https://developer.giphy.com  
-it requires an email to register a key  
-    
-No special features are included,  WYSIWYG  
-  
+the OMDB API can be found at: http://www.omdbapi.com/    
+both APIs require an email to get a registered key  
+
+Final note:  The query is built around pixar movies.  To promote relevant pixar movie responses in the giphy search,  we add a "pixar" tag to every search to boost up pixar related content.  (e.g., consider what "cars", "coco" or "up" would return otherwise)  
+
 ## Built With
 jQuery 3.3.1 - JavaScript library   
   
@@ -37,6 +40,7 @@ jQuery 3.3.1 - JavaScript library
 Michael Galarneau - Initial work - Five0fFour  
   
 ## Acknowledgements
+Pixar (of course!):  http://www.pixar.com
 Giphy API:  https://developer.giphy.com
 OMDB API:  http://www.omdbapi.com/  
 Background Wallpaper: http://pixar.wikia.com/wiki/Pixar_Animation_Studios  (modified)  
