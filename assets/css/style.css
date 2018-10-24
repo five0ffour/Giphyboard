@@ -8,48 +8,19 @@ ul {
 }
 
 #gifForm {
-    float: right;
-    width: 25%;
     text-align: left;
     padding: 20px;
-    margin: 10px;
     color: white;
-    border: solid 1px white;
 }
 
 #poster {
-    float: right;
-    width: 25%;
     text-align: left;
     padding: 20px;
-    margin: 10px;
     color: white;
-    border: solid 1px white;
-}
-
-#gifs {
-    float: left;
-    width: 70%;
-    margin-top: 10px;
-    border: solid 1px white;
-}
-
-#gifButtons {
-    width: 100%;
 }
 
 .gif-btn {
     padding: 5px;
-    margin: 5px;
     font-size: 16px;
     color: blue;
-}
-
-.list-item {
-    float: left;
-    margin: 10px;
-}
-
-.list-image {
-    margin: 5px;
 }

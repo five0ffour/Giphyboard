@@ -73,8 +73,7 @@ $(document).ready(function () {
         };
 
         // Add the remaining parameters including the item to search for
-        // add the keyword "pixar" to the search to help boost pixar related content
-        queryParams.q = title + " pixar";
+        queryParams.q = title;
         queryParams.limit = numGifsPerSearch;
         queryParams.offset = "0";
 
@@ -147,7 +146,7 @@ $(document).ready(function () {
 
             // Get specific gif metadata for current index
             var gifData = responseData.data[i];
-            var gifListItemElem = $("<li class='list-item'>");
+            var gifListItemElem = $("<li class='list-item m-1'>");
 
             // Add Title
             var gifSpanTitle = $("<span>");
@@ -269,7 +268,7 @@ $(document).ready(function () {
         performOMDBSearch(lastTopicSearch);
     });
 
-        //--------------------------------
+    //--------------------------------
     // $(numGifs).click()  -- sets the number of gif images to display with each search event
     //--------------------------------
     $("#rating").change("click", function() {
@@ -278,6 +277,7 @@ $(document).ready(function () {
         gifRating = $(this).val();
         clear();
         performGiphySearch(lastTopicSearch);
+        performOMDBSearch(lastTopicSearch);
     });
 
 });
