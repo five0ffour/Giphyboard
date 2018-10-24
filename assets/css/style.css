@@ -1,6 +1,11 @@
 body {
     background-image: url("../images/pixar.jpg");
+    background-repeat: no-repeat;
     width: 100%;
+}
+
+.blue {
+    background-color:#83abda;
 }
 
 ul {
