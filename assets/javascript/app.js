@@ -150,7 +150,7 @@ $(document).ready(function () {
             // Add Title
             var gifSpanTitle = $("<span>");
             gifSpanTitle.addClass("label");
-            gifSpanTitle.html("<strong>" + gifData.title + "</strong>");
+            gifSpanTitle.html("<strong>" + (i+1) + ") " + gifData.title + "</strong>");
             gifListItemElem.append(gifSpanTitle);
             gifListItemElem.append($("<br>"));
 
