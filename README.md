@@ -17,7 +17,7 @@ GitBash installed locally
 1.  Find a Locate an empty directory on your hard drive  
 2.  Open a bash terminal in that directory  
 3.  Clone the unit-4-game repo down using  Git    
-         "git clone https://github.com/five0ffour/Giphyboard.git  
+         "git clone https://github.com/five0ffour/Pixar.git  
 4.  Open index.html in your favorite browser  
         It should display the game board and prompt you for an entry  
   
@@ -37,6 +37,7 @@ jQuery 3.3.1 - JavaScript library
 Michael Galarneau - Initial work - Five0fFour  
   
 ## Acknowledgements
-Giphy API:  https://developer.giphy.com  
+Giphy API:  https://developer.giphy.com
+OMDB API:  http://www.omdbapi.com/  
 Background Wallpaper: http://pixar.wikia.com/wiki/Pixar_Animation_Studios  (modified)  
 Favicon:  https://www.iconfinder.com/icons/23178/eve_pixar_robot_icon  

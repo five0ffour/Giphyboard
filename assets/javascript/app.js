@@ -9,19 +9,19 @@ $(document).ready(function () {
 
     // List of buttons to preload when page starts
     var topics = [
-        "inside out",
+        "Toy Story",
+        "A Bug's Life",
+        "Monsters, Inc.",
+        "Finding Nemo",
+        "The Incredibles",
+        "Cars",
+        "Ratatouille",
         "WALL-E",
-        "toy story",
-        "finding nemo",
-        "the incredibles",
-        "ratatouille",
-        "up",
-        "monsters, inc.",
-        "pixar cars",
-        "a bug's life",
-        "pixar brave",
-        "pixar coco",
-        "the good dinosaur",
+        "Up",
+        "Brave",
+        "Inside Out",
+        "The Good Dinosaur",
+        "Coco"
     ];
     var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
 
@@ -43,6 +43,7 @@ $(document).ready(function () {
         }
         // search and display the first button's topic
         performGiphySearch(title);
+        performOMDBSearch(title);
     }
 
     //-----------------------------------------------
@@ -72,7 +73,8 @@ $(document).ready(function () {
         };
 
         // Add the remaining parameters including the item to search for
-        queryParams.q = title;
+        // add the keyword "pixar" to the search to help boost pixar related content
+        queryParams.q = title + " pixar";
         queryParams.limit = numGifsPerSearch;
         queryParams.offset = "0";
 
@@ -200,10 +202,11 @@ $(document).ready(function () {
         var title = $(this).attr("data-topic");
         clear();
         performGiphySearch(title);
+        performOMDBSearch(title);
     });
 
     //-----------------------
-    // $("#addGif").on("click") - event handler for "Add Gif" event -
+    // $("#addGif").on("click") - event handler for "Add Gif" button event -
     //                            adds a new button and associated images to the screen
     //                            submits a query using the selected filters
     //-----------------------
@@ -224,6 +227,7 @@ $(document).ready(function () {
         clear();
         addButton(title);
         performGiphySearch(title);
+        performOMDBSearch(title);
     });
 
     //-----------------------
@@ -262,6 +266,7 @@ $(document).ready(function () {
         numGifsPerSearch = $(this).val();
         clear();
         performGiphySearch(lastTopicSearch);
+        performOMDBSearch(lastTopicSearch);
     });
 
         //--------------------------------
