@@ -2,7 +2,9 @@
   
 A simple site that demonstrates integration with the Giphy API.  
   
-The game loads 10 buttons of movies produced or created by Pixar.   With a click of each button the program queries Giphy using the button label and pulls back 10 gif links.   The display shows the title, rating and a still image of that gif.   By clicking on the gif image itself,  it will animate.  
+The game loads 10 buttons of movies produced or created by Pixar.   With a click of each button the program queries Giphy using the button label and pulls back 10 gif links by default.   The display shows the title, rating and a still image of each gif.   By clicking on the gif image itself,  it will animate.  Click again and it pauses.
+
+The sidebar filter box allows the user to customize the number of gifs returned and the rating level (capping it to the specified rating)
 
 The application runs a parallel query to do a movie search and display an associated movie poster (if found).  If an entry is found the program displays some contextual content (name, year, plot, rating) and the img of the moview poster on the sidebar.  
   
