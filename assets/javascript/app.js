@@ -146,7 +146,7 @@ $(document).ready(function () {
     //                  <span class="label"><strong>Title</strong></span><br>
     //                  <div class="img-wrapper">
     //                      <div class="gif-img img-responsive">
-    //                          <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" data-topicIdx=0 
+    //                          <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" 
     //                              data-stillURL="url(still_gif_url)" data-animateUrl="url(animate_gif_url)">
     //                      </div>
     //                      <div class="img-overlay">
@@ -168,9 +168,6 @@ $(document).ready(function () {
         parentElem.append(gifSpanTitle);
         parentElem.append($("<br>"));
 
-        // Find the index of the current item and save it as metadata to the element
-        var topicIdx = topics.indexOf(lastTopicSearch);
-
         // Update the screen element with an img and  indexes it to the saved metadata
         var imgDiv = $("<div>");
         imgDiv.addClass("img-wrapper");
@@ -181,7 +178,6 @@ $(document).ready(function () {
         $(gifImgElem).attr("src", gifData.images.fixed_height_still.url);
         $(gifImgElem).attr("alt", gifData.title);
         $(gifImgElem).attr("data-animated", "still");
-        $(gifImgElem).attr("data-topicIdx", topicIdx);
         $(gifImgElem).attr("data-animateUrl", gifData.images.fixed_height.url);
         $(gifImgElem).attr("data-stillUrl", gifData.images.fixed_height_still.url);
 
@@ -194,7 +190,6 @@ $(document).ready(function () {
         favoriteBtn.html("<i class='fas fa-heart'></i>");
         favoriteBtn.attr("title", gifData.title);
         favoriteBtn.attr("data-animated", "still");
-        favoriteBtn.attr("data-topicIdx", topicIdx);
         favoriteBtn.attr("data-animateUrl", gifData.images.fixed_height.url);
         favoriteBtn.attr("data-stillUrl", gifData.images.fixed_height_still.url);
         btnDiv.append(favoriteBtn);
@@ -322,7 +317,6 @@ $(document).ready(function () {
         imgElem.attr("alt", btnElem.attr("data-title"));
         imgElem.attr("src", btnElem.attr("data-stillUrl"));
         imgElem.attr("data-animated", "still");
-        imgElem.attr("data-topicIdx", btnElem.attr("topic-Idx"));
         imgElem.attr("data-animateUrl", btnElem.attr("data-animateUrl"));
         imgElem.attr("data-stillUrl", btnElem.attr("data-stillUrl"));
         $("#favorites").append(imgElem);
