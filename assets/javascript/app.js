@@ -54,7 +54,7 @@ $(document).ready(function () {
         // Add a button to the main title screen
         var btn = $("<button>");
         btn.text(title);
-        btn.addClass("gif-btn");
+        btn.addClass("btn btn-primary gif-btn");
         btn.attr("data-topic", title);
         $("#gifButtons").append(btn);
     }
@@ -118,6 +118,7 @@ $(document).ready(function () {
     //              <li class="list-item>">
     //                  <span class="label"><strong>Title</strong></span>
     //                  <br>
+    //                  
     //                  <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" data-topicIdx=0 
     //                       data-stillURL="url(still_gif_url)" data-animateUrl="url(animate_gif_url)">
     //                  <br>
@@ -146,11 +147,11 @@ $(document).ready(function () {
 
             // Get specific gif metadata for current index
             var gifData = responseData.data[i];
-            var gifListItemElem = $("<li class='list-item m-1'>");
+            var gifListItemElem = $("<li class='list-item p-0 m-1'>");
 
             // Add Title
             var gifSpanTitle = $("<span>");
-            gifSpanTitle.addClass("label");
+            gifSpanTitle.addClass("title-lbl");
             gifSpanTitle.html("<strong>" + (i+1) + ") " + gifData.title + "</strong>");
             gifListItemElem.append(gifSpanTitle);
             gifListItemElem.append($("<br>"));
@@ -158,25 +159,42 @@ $(document).ready(function () {
             // Find the index of the current item and save it as metadata to the element
             var topicIdx = topics.indexOf(lastTopicSearch);
 
-            // Update the screen item, with indexes it to the saved metadata
+            // Update the screen element with an img and  indexes it to the saved metadata
+            var imgDiv = $("<div>");
+            imgDiv.addClass("img-wrapper");
+
+            // create our gif image with the needed metadata 
             var gifImgElem = $("<img>");
-            $(gifImgElem).addClass("gif-img");
+            $(gifImgElem).addClass("img-responsive");
             $(gifImgElem).attr("src", gifData.images.fixed_height_still.url);
             $(gifImgElem).attr("alt", gifData.title);
             $(gifImgElem).attr("data-animated",  "still");
             $(gifImgElem).attr("data-topicIdx", topicIdx);
             $(gifImgElem).attr("data-animateUrl", gifData.images.fixed_height.url);
             $(gifImgElem).attr("data-stillUrl", gifData.images.fixed_height_still.url);
+            
+            // create our favoties button, with some metadata, to float over the gif (placed in a wrapper for positioning)
+            var btnDiv = $("<div>");
+            btnDiv.addClass("img-overlay");
 
-            // Chain it all to the DOM
-            gifListItemElem.append(gifImgElem);
+            var favoriteBtn = $("<button>");
+            favoriteBtn.addClass("btn btn-sm btn-outline-light text-danger fav-btn");
+            favoriteBtn.html("<i class='fas fa-heart'></i>");
+            favoriteBtn.attr("title", gifData.title);
+            favoriteBtn.attr("data-animateUrl", gifData.images.fixed_height.url);
+            favoriteBtn.attr("data-stillUrl", gifData.images.fixed_height_still.url);
+            btnDiv.append(favoriteBtn);
+
+            // Chain it all to the DOM embedded in a wrapper div (to position the favorite button)
+            imgDiv.append(gifImgElem);
+            imgDiv.append(btnDiv);
+            gifListItemElem.append(imgDiv);
 
             // Add Rating
-            var gifSpanRating = $("<span>");
-            gifListItemElem.append($("<br>"));
-            gifSpanRating.html("Rated: " + gifData.rating.toUpperCase());
-            gifListItemElem.append(gifSpanRating);
-            gifListItemElem.append($("<br>"));
+            var pRating = $("<p>");
+            pRating.addClass("rating-lbl");
+            pRating.html("Rated: " + gifData.rating.toUpperCase());
+            gifListItemElem.append(pRating);
 
             gifListElem.append(gifListItemElem);
         }
@@ -195,7 +213,7 @@ $(document).ready(function () {
     // ==========================================================
 
     //-----------------------
-    // $(document).on("click", ".gif-btn") - generatic function to fresh screen on query button clicks
+    // $(document).on("click", ".gif-btn") - generic function to fresh screen on query button clicks
     //-----------------------
     $(document).on("click", ".gif-btn", function () {
         var title = $(this).attr("data-topic");
