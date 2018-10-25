@@ -7,7 +7,7 @@
         var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
 
         // Logging the URL so we have access to it for troubleshooting
-        console.log(queryURL);
+        console.log("buildOMDBQueryURL() - " + queryURL);
 
         return queryURL;
     }
@@ -26,7 +26,9 @@
             url: queryURL,
             method: "GET"
         }).then(function(response) {
+            console.log("--------- performOMDBSearch() response data ------------");
             console.log(response);
+            console.log("--------------------------------------------------------");
 
           // Creating a div to hold the movie
           var movieDiv = $("<div class='movie'>");

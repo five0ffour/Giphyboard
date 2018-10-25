@@ -85,7 +85,7 @@ $(document).ready(function () {
         queryParams.lang = "en";
 
         // Logging the URL so we have access to it for troubleshooting
-        console.log(queryURL + $.param(queryParams));
+        console.log("buildQueryURL()- " + queryURL + $.param(queryParams));
 
         return queryURL + $.param(queryParams);
     }
@@ -118,8 +118,9 @@ $(document).ready(function () {
         const numGifs = responseData.data.length < numGifsPerSearch ? responseData.data.length : numGifsPerSearch;
 
         // Log the giphyData to console, where it will show up as an object
+        console.log("-----------UpdatePage() response data -----------------------");
         console.log(responseData);
-        console.log("------------------------------------");
+        console.log("-------------------------------------------------------------");
 
         // Create unordered list element and attach to main HTML element 
         var gifListElem = $("<ul>");
@@ -192,6 +193,8 @@ $(document).ready(function () {
         favoriteBtn.addClass("btn btn-sm btn-outline-light text-danger fav-btn");
         favoriteBtn.html("<i class='fas fa-heart'></i>");
         favoriteBtn.attr("title", gifData.title);
+        favoriteBtn.attr("data-animated", "still");
+        favoriteBtn.attr("data-topicIdx", topicIdx);
         favoriteBtn.attr("data-animateUrl", gifData.images.fixed_height.url);
         favoriteBtn.attr("data-stillUrl", gifData.images.fixed_height_still.url);
         btnDiv.append(favoriteBtn);
@@ -305,6 +308,25 @@ $(document).ready(function () {
         clear();
         performGiphySearch(lastTopicSearch);
         performOMDBSearch(lastTopicSearch);
+    });
+
+    //-----------------------------------------
+    // $(document).on("click", ".fav-btn") -- generic function to handle the processing of a favorite button being clicked
+    //-----------------------------------------
+    $(document).on("click", ".fav-btn", function () {
+        console.log("on click fav-btn() - " + $(this).attr("title"));
+
+        var btnElem = $(this);
+        var imgElem = $("<img>");
+        imgElem.addClass("gif-img img-responsive m-1");
+        imgElem.attr("alt", btnElem.attr("data-title"));
+        imgElem.attr("src", btnElem.attr("data-stillUrl"));
+        imgElem.attr("data-animated", "still");
+        imgElem.attr("data-topicIdx", btnElem.attr("topic-Idx"));
+        imgElem.attr("data-animateUrl", btnElem.attr("data-animateUrl"));
+        imgElem.attr("data-stillUrl", btnElem.attr("data-stillUrl"));
+        $("#favorites").append(imgElem);
+
     });
 
 });
