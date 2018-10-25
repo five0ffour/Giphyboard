@@ -5,7 +5,7 @@ body {
 }
 
 .blue {
-    background-color:#83abda;
+    background-color: #83abda;
 }
 
 ul {
@@ -13,7 +13,7 @@ ul {
 }
 
 .gif-btn,
-{
+    {
     padding: 5px;
     margin: 5px;
     font-size: 16px;
@@ -35,25 +35,24 @@ ul {
 
 .img-wrapper {
     position: relative;
-   }
-  
-  .img-responsive {
+}
+
+.img-responsive {
     width: 100%;
     height: auto;
-  }
-  
-  .img-overlay {
+}
+
+.img-overlay {
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 10;
+    bottom: 85%;
+    right: 1%;
     text-align: right;
-  }
-  
-  .img-overlay:before {
+}
+
+.img-overlay:before {
     content: ' ';
     display: block;
     /* adjust 'height' to position overlay content vertically */
     height: 5%;
-  }
+}

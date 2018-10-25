@@ -23,7 +23,7 @@ $(document).ready(function () {
         "The Good Dinosaur",
         "Coco"
     ];
-    var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
+    var lastTopicSearch = topics[topics.length - 1]; // note tracking the last topic searched
 
     /******************************************* */
     /* initalize the page with our seeded topics */
@@ -54,7 +54,7 @@ $(document).ready(function () {
         // Add a button to the main title screen
         var btn = $("<button>");
         btn.text(title);
-        btn.addClass("btn btn-primary gif-btn");
+        btn.addClass("btn btn-primary gif-btn m-1");
         btn.attr("data-topic", title);
         $("#gifButtons").append(btn);
     }
@@ -111,22 +111,6 @@ $(document).ready(function () {
 
     //---------------------------
     // updatePage(responseData) - called by AJAX resposne, turns JSON  into elements on the page
-    //
-    //      Appends/creates the following UI element:
-    //      <div id="gifs">
-    //          <ul class="list-group">
-    //              <li class="list-item>">
-    //                  <span class="label"><strong>Title</strong></span>
-    //                  <br>
-    //                  
-    //                  <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" data-topicIdx=0 
-    //                       data-stillURL="url(still_gif_url)" data-animateUrl="url(animate_gif_url)">
-    //                  <br>
-    //                  <span>Rated: G</span>
-    //                  <br>
-    //              </li>
-    //          </ul>
-    //      </div>
     //---------------------------
     function updatePage(responseData) {
 
@@ -144,62 +128,87 @@ $(document).ready(function () {
 
         // Loop through and build buttons for the defined number of gifs
         for (var i = 0; i < numGifs; i++) {
-
-            // Get specific gif metadata for current index
-            var gifData = responseData.data[i];
-            var gifListItemElem = $("<li class='list-item p-0 m-1'>");
-
-            // Add Title
-            var gifSpanTitle = $("<span>");
-            gifSpanTitle.addClass("title-lbl");
-            gifSpanTitle.html("<strong>" + (i+1) + ") " + gifData.title + "</strong>");
-            gifListItemElem.append(gifSpanTitle);
-            gifListItemElem.append($("<br>"));
-
-            // Find the index of the current item and save it as metadata to the element
-            var topicIdx = topics.indexOf(lastTopicSearch);
-
-            // Update the screen element with an img and  indexes it to the saved metadata
-            var imgDiv = $("<div>");
-            imgDiv.addClass("img-wrapper");
-
-            // create our gif image with the needed metadata 
-            var gifImgElem = $("<img>");
-            $(gifImgElem).addClass("img-responsive");
-            $(gifImgElem).attr("src", gifData.images.fixed_height_still.url);
-            $(gifImgElem).attr("alt", gifData.title);
-            $(gifImgElem).attr("data-animated",  "still");
-            $(gifImgElem).attr("data-topicIdx", topicIdx);
-            $(gifImgElem).attr("data-animateUrl", gifData.images.fixed_height.url);
-            $(gifImgElem).attr("data-stillUrl", gifData.images.fixed_height_still.url);
-            
-            // create our favoties button, with some metadata, to float over the gif (placed in a wrapper for positioning)
-            var btnDiv = $("<div>");
-            btnDiv.addClass("img-overlay");
-
-            var favoriteBtn = $("<button>");
-            favoriteBtn.addClass("btn btn-sm btn-outline-light text-danger fav-btn");
-            favoriteBtn.html("<i class='fas fa-heart'></i>");
-            favoriteBtn.attr("title", gifData.title);
-            favoriteBtn.attr("data-animateUrl", gifData.images.fixed_height.url);
-            favoriteBtn.attr("data-stillUrl", gifData.images.fixed_height_still.url);
-            btnDiv.append(favoriteBtn);
-
-            // Chain it all to the DOM embedded in a wrapper div (to position the favorite button)
-            imgDiv.append(gifImgElem);
-            imgDiv.append(btnDiv);
-            gifListItemElem.append(imgDiv);
-
-            // Add Rating
-            var pRating = $("<p>");
-            pRating.addClass("rating-lbl");
-            pRating.html("Rated: " + gifData.rating.toUpperCase());
-            gifListItemElem.append(pRating);
-
-            gifListElem.append(gifListItemElem);
+            addGifImgElements(responseData.data[i], i+1, gifListElem);
         }
     }
 
+    //---------------------------------------
+    // addGifImgElements(gifData, position, parentElem) -- creates the HTML necessary to embed the gif img and favorite buttons to the page
+    //          gifData -  the ajax response data from Giphy for one gif entry
+    //          position - the screen position to add to the title
+    //          parentElem - the UI element on which to chain this all under
+    //
+    // Appends/creates the following UI elements:
+    //      <div id="gifs">
+    //          <ul class="list-group">         <----- parent element passed from updatePage()
+    //              <li class="list-item">     
+    //                  <span class="label"><strong>Title</strong></span><br>
+    //                  <div class="img-wrapper">
+    //                      <div class="gif-img img-responsive">
+    //                          <img src=url'(stillUrl)' alt="gif title" class="gif-img" data-animated="still" data-topicIdx=0 
+    //                              data-stillURL="url(still_gif_url)" data-animateUrl="url(animate_gif_url)">
+    //                      </div>
+    //                      <div class="img-overlay">
+    //                          <button>heart-icon</button>
+    //                      </div>
+    //                  </div>
+    //                  <p>Rated: G</p>
+    //              </li>
+    //          </ul>
+    //      </div>
+    //---------------------------------------
+    function addGifImgElements(gifData, position, parentElem) {
+        var gifListItemElem = $("<li class='list-item p-0 m-1'>");
+
+        // Add Title
+        var gifSpanTitle = $("<span>");
+        gifSpanTitle.addClass("title-lbl");
+        gifSpanTitle.html("<strong>" + position + ") " + gifData.title + "</strong>");
+        parentElem.append(gifSpanTitle);
+        parentElem.append($("<br>"));
+
+        // Find the index of the current item and save it as metadata to the element
+        var topicIdx = topics.indexOf(lastTopicSearch);
+
+        // Update the screen element with an img and  indexes it to the saved metadata
+        var imgDiv = $("<div>");
+        imgDiv.addClass("img-wrapper");
+
+        // create our gif image with the needed metadata 
+        var gifImgElem = $("<img>");
+        $(gifImgElem).addClass("gif-img img-responsive");
+        $(gifImgElem).attr("src", gifData.images.fixed_height_still.url);
+        $(gifImgElem).attr("alt", gifData.title);
+        $(gifImgElem).attr("data-animated", "still");
+        $(gifImgElem).attr("data-topicIdx", topicIdx);
+        $(gifImgElem).attr("data-animateUrl", gifData.images.fixed_height.url);
+        $(gifImgElem).attr("data-stillUrl", gifData.images.fixed_height_still.url);
+
+        // create our favoties button, with some metadata, to float over the gif (placed in a wrapper for positioning)
+        var btnDiv = $("<div>");
+        btnDiv.addClass("img-overlay");
+
+        var favoriteBtn = $("<button>");
+        favoriteBtn.addClass("btn btn-sm btn-outline-light text-danger fav-btn");
+        favoriteBtn.html("<i class='fas fa-heart'></i>");
+        favoriteBtn.attr("title", gifData.title);
+        favoriteBtn.attr("data-animateUrl", gifData.images.fixed_height.url);
+        favoriteBtn.attr("data-stillUrl", gifData.images.fixed_height_still.url);
+        btnDiv.append(favoriteBtn);
+
+        // Chain it all to the DOM embedded in a wrapper div (to position the favorite button)
+        imgDiv.append(gifImgElem);
+        imgDiv.append(btnDiv);
+        gifListItemElem.append(imgDiv);
+
+        // Add Rating
+        var pRating = $("<p>");
+        pRating.addClass("rating-lbl");
+        pRating.html("Rated: " + gifData.rating.toUpperCase());
+        gifListItemElem.append(pRating);
+
+        parentElem.append(gifListItemElem);
+    }
 
     //-----------------------
     // clear() -  empty out the images on the screen in advance of a refresh
@@ -277,9 +286,9 @@ $(document).ready(function () {
     //--------------------------------
     // $(numGifs).click()  -- sets the number of gif images to display with each search event
     //--------------------------------
-    $("#numGifs").change("click", function() {
+    $("#numGifs").change("click", function () {
         // Use the form control's value to set the global variable for the number of images to display per search
-        var item=$(this);
+        var item = $(this);
         numGifsPerSearch = $(this).val();
         clear();
         performGiphySearch(lastTopicSearch);
@@ -289,9 +298,9 @@ $(document).ready(function () {
     //--------------------------------
     // $(numGifs).click()  -- sets the number of gif images to display with each search event
     //--------------------------------
-    $("#rating").change("click", function() {
+    $("#rating").change("click", function () {
         // Use the form control's value to set the global variable for the number of images to display per search
-        var item=$(this);
+        var item = $(this);
         gifRating = $(this).val();
         clear();
         performGiphySearch(lastTopicSearch);
