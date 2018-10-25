@@ -7,7 +7,7 @@ $(document).ready(function () {
     var numGifsPerSearch = 10;
     var gifRating = "none";
 
-    // List of buttons to preload when page starts
+    // List of buttons to preload when page starts, in order of release date
     var topics = [
         "Toy Story",
         "A Bug's Life",
@@ -20,8 +20,8 @@ $(document).ready(function () {
         "Up",
         "Brave",
         "Inside Out",
-        "Coco",
-        "The Good Dinosaur"
+        "The Good Dinosaur",
+        "Coco"
     ];
     var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
 
@@ -73,7 +73,7 @@ $(document).ready(function () {
         };
 
         // Add the remaining parameters including the item to search for
-        queryParams.q = title;
+        queryParams.q = title + " pixar";
         queryParams.limit = numGifsPerSearch;
         queryParams.offset = "0";
 
