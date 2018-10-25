@@ -39,8 +39,8 @@ Final note:  The query is built around pixar movies.  To promote relevant pixar 
 
 ## Built With
 jQuery 3.3.1 - JavaScript library   
-Bootstrap 4.1.2 - Bootstrap Library
-Font Awesome 5.4.1 - Font Library
+Bootstrap 4.1.2 - Bootstrap Library  
+Font Awesome 5.4.1 - Font Library  
   
 ## Authors
 Michael Galarneau - Initial work - Five0fFour  
