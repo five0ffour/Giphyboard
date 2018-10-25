@@ -20,8 +20,8 @@ $(document).ready(function () {
         "Up",
         "Brave",
         "Inside Out",
-        "The Good Dinosaur",
-        "Coco"
+        "Coco",
+        "The Good Dinosaur"
     ];
     var lastTopicSearch = topics[topics.length-1];     // note tracking the last topic searched
 
