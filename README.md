@@ -29,13 +29,16 @@ GitBash installed locally
   
 ## Developer notes
 index.html:  main entry point and user interface, minimal code is here, the dynamicism is all in the app.js
-app.js:  the main mouse click and timer events and UI updates     
-  
+app.js: the main UI updates and giphy api calls  
+omdb.js:  the favorite pane update and omdb movie api calls   
+
 the Giphy API can be found at:  https://developer.giphy.com  
 the OMDB API can be found at: http://www.omdbapi.com/    
 both APIs require an email to get a registered key  
 
-Final note:  The query is built around pixar movies.  To promote relevant pixar movie responses in the giphy search,  we add a "pixar" tag to every search to boost up pixar related content.  (e.g., consider what "cars", "coco" or "up" would return otherwise)  
+Final note:  The query is built around pixar movies.  To promote relevant pixar movie responses in the giphy search,  we add a "pixar" tag to every search to boost up pixar related content.  (e.g., consider what "cars", "coco" or "up" would return otherwise).   Other generic queries are not prohobited but will likely bring back some pixar content.
+
+Persistant storage of the favorites link is not implemented as of the time of this writing.  
 
 ## Built With
 jQuery 3.3.1 - JavaScript library   
