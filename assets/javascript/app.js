@@ -320,7 +320,6 @@ $(document).ready(function () {
         imgElem.attr("data-animateUrl", btnElem.attr("data-animateUrl"));
         imgElem.attr("data-stillUrl", btnElem.attr("data-stillUrl"));
         $("#favorites").append(imgElem);
-
     });
 
 });
